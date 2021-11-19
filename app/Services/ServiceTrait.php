@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\AuditCollection;
+use App\Http\Resources\DefaultCollection;
 use App\Utils\Helpers;
 use App\Validators\CommentValidator;
 use Exception;
@@ -16,7 +17,13 @@ trait ServiceTrait
 
     abstract function validationRules ();
 
-    abstract function resourceCollection ();
+    public function resourceCollection () {
+        if (isset($this->resourceCollection)) {
+            return $this->resourceCollection;
+        }
+
+        return DefaultCollection::class;
+    }
 
     /**
      * Display a listing of the resource.
@@ -62,7 +69,7 @@ trait ServiceTrait
 
         DB::transaction(function () use ($request, &$result) {
 
-            $this->validationRules()::validate($request->all());
+            $this->validationRules()->validate($request->all());
 
             $result = $this->model()->create($request->all());
         });
@@ -100,7 +107,7 @@ trait ServiceTrait
 
             $result = $this->model()->findOrFail($id);
 
-            $this->validationRules()::validate(array_merge(['id' => $id], $request->all()));
+            $this->validationRules()->validate(array_merge(['id' => $id], $request->all()));
 
             $result->update($request->all());
         });
@@ -174,7 +181,6 @@ trait ServiceTrait
 
         return [];
     }
-
 
     public function createComment (Request $request, $id)
     {

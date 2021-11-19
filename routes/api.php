@@ -27,3 +27,8 @@ Route::group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\Auth'], f
         Route::patch('update_profile', 'AuthController@updateProfile');
     });
 });
+
+// EVENTS CONTROLLER //
+Route::group(['namespace' => 'App\Http\Controllers\Api'], function () {
+    Route::post('events', 'EventController@store');
+});

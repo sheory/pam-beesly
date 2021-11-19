@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\Auth;
 
 use App\Enums\UserRoles;
 use App\Http\Resources\DefaultCollection;
@@ -10,6 +10,7 @@ use App\Jobs\SendResetPasswordJob;
 use App\Mail\ResetEmail;
 use App\Mail\ResetPasswordEmail;
 use App\Models\User;
+use App\Services\ServiceTrait;
 use App\Utils\SMS;
 use App\Utils\UploadFile;
 use App\Validators\UserValidator;
